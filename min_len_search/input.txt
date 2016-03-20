@@ -1,0 +1,11 @@
+2
+axb
+3
+INSERT a
+QUERY 0
+QUERY 1
+explore
+3
+INSERT r
+QUERY 7
+QUERY 1

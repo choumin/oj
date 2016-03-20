@@ -1,0 +1,10 @@
+2
+2
+Insert 0 10
+Find 0
+5
+Insert 1 1
+Find 2
+Insert 2 2
+Find 2
+Find 1

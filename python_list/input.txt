@@ -1,0 +1,16 @@
+2
+5
+a=[]
+a.append(0)
+a.append(1)
+a[0]
+a[1]
+8
+lista=[]
+lista.append(123)
+lista.append(65)
+lista[0]
+lista.sort()
+lista[0]
+listb=[]
+listb[0]

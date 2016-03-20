@@ -1,0 +1,13 @@
+2
+5
+Pop
+Insert 1+i2
+Insert 2+i3
+Pop
+Pop
+4
+Insert 12+i2
+Insert 23+i9
+Insert 23+i2
+Pop
+
