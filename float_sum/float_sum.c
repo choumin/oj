@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_COUNT	104
+#define MAX_COUNT	204
 
-char f1[2][MAX_COUNT];
-char f2[2][MAX_COUNT];
-char ret_int[MAX_COUNT];
-char ret_dec[MAX_COUNT];
+unsigned char f1[MAX_COUNT];
+unsigned char f2[MAX_COUNT];
+unsigned char sum_str[MAX_COUNT];
 
 int add_str(char *str1, int end1, char *str2, int end2, int c, char *ret_str, int mode)
 {
@@ -73,22 +72,125 @@ int deal_one_line(void)
 	int ret = 0;
 	int i = 0;
 	int j = 0;
-	int c1 = 0;
-	int c2 = 0;
-	char *p = NULL;
+	int c = 0;
+	unsigned char *p = NULL;
 	int max = 0;
+	int pi1 = 0;
+	int pi2 = 0;
+	int sum = 0;
+	int delt = 0;
+	int begin = 0;
+	int end = 0;
+	int no_dec = 0;
+	int no_int = 0;
 
 	for (i = 0; i < MAX_COUNT; i++) {
-		ret_int[i] = 0;
-		ret_dec[i] = 0;
+		sum_str[i] = 0;
 	}
 
 	while (scanf("%c", &ch) != EOF && ch == '\n') {
 		;
 	}
+
+	p = f1;
+	for (i = 0; i < 2; i++) {
+		j = 0;
+		p[++j] = ch;
+		while (scanf("%c", &ch) != EOF && ch != '\n') {
+			if (ch == '.') {
+				if (i == 0) {
+					pi1 = j + 1;
+				} else {
+					pi2 = j + 1;
+				}
+			}
+			p[++j] = ch;	
+		}
+		p[0] = j;
+		if (i == 0) {
+			p = f2;
+			scanf("%c", &ch);			
+		}
+	}
+
+	delt = pi1 - pi2;
+	delt = delt > 0 ? delt : delt * -1;
+	if (pi1 < pi2) {
+		for (i = f1[0]; i > 0; i--) {
+			f1[i + delt] = f1[i];
+		}
+		for (i = 1; i <= delt; i++) {
+			f1[i] = '0';
+		}
+		f1[0] += delt;
+	} else if (pi2 < pi1){
+		for (i = f2[0]; i > 0; i--) {
+			f2[i + delt] = f2[i];
+		}
+		for (i = 1; i <= delt; i++) {
+			f2[i] = '0';
+		}
+		f2[0] += delt;
+	}
+
+	delt = f1[0] - f2[0];
+	delt = delt > 0 ? delt : delt * -1;
+	if (f1[0] < f2[0]) {
+		for (i = 1; i <= delt; i++) {
+			f1[f1[0] + i] = '0';
+		}
+	} else if (f2[0] < f1[0]){
+		for (i = 1; i <= delt; i++) {
+			f2[f2[0] + i] = '0';
+		}
+	}
+	max = f1[0] > f2[0] ? f1[0] : f2[0];
+	j = MAX_COUNT - 2;
+	
+	for (i = max; i > 0; i--) {
+		if (f1[i] == '.') {
+			sum_str[j--] = '.';
+			continue;
+		}
+		sum = c;
+		sum += f1[i] - '0' + f2[i] - '0';
+		sum_str[j--] = sum % 10 + '0';
+		c = sum / 10;
+	}
+	if (c) {
+		sum_str[j] = c % 10 + '0';
+	}
+	j = MAX_COUNT - 2;
+	while (j > 0 && sum_str[j] == '0'){
+		j--;
+	}
+	end = j;
+	if (sum_str[end] == '.') {
+		end--;
+		no_dec = 1;
+	}
 	j = 0;
-	p = f1[0];
-	p[++j] = ch;
+	while (j < MAX_COUNT && (!sum_str[j] || sum_str[j] == '0')) {
+		j++;
+	}
+	begin = j;
+	if (sum_str[begin] == '.') {
+		no_int = 1;
+	} 
+	if (no_int && no_dec) {
+		printf("0\n");
+	} else {
+		for (i = begin; i <= end; i++) {
+			printf("%c", sum_str[i]);
+		}
+		printf("\n");
+	}
+/*	j = 0;
+	while (!sum_str[j]) {
+		j++;
+	}
+	printf("%s\n", sum_str + j);
+	
 	while (scanf("%c", &ch) != EOF && ch != '\n') {
 		if (ch == '.') {
 			p[0] = j;
@@ -133,7 +235,7 @@ int deal_one_line(void)
 	} else {
 		printf("\n");
 	}
-	
+*/
 	
 	return 0;
 }
