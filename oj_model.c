@@ -20,4 +20,6 @@ int main(void)
 	}
 	
 	if (fp != stdin) fclose(fp);
+
+	return 0;
 }

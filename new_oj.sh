@@ -1,5 +1,8 @@
 #!/bin/sh
-[ $# -ne 1 ] && echo "Usage: $0 oj_name" && exit -1
+[ $# -ne 3 ] && echo "Usage: $0 -c|-cpp oj_name" && exit -1
+
+if 
+
 filename=$1
 filename=${filename#*./}
 mkdir $filename
